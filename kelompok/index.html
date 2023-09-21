@@ -31,7 +31,7 @@
                     <li>Hafidh Ridhwan Nafisa</li>
                     <li>Nicholas Mendova Munthe</li>
                     <li>NAUFAL NAWWARUDDIN ADI WIBOWO</li>
-                    <li>M. Rashif Mishbahul Akbar</li>
+                    <li>M. Rashif Mishbahul Akbar (capt)</li>
                     <li>Naufal Helmi Murtadha</li>
                     <li>Nabil Azh Zhahir</li>
                     <li>Muhammad Bahrul Ulum</li>
@@ -487,7 +487,7 @@
                 <h2>Silver bolt</h2>
                 <p><strong>Pendamping:</strong> Us Aida</p>
                 <ul>
-                    <li>Danisa Aji Atmaja ( Capt)</li>
+                    <li>Danisa Aji Atmaja (Capt)</li>
                     <li>Nahidah Yumna Luthfiah</li>
                     <li>Annisa Bilqis Istiqlal</li>
                     <li>Zafira Mellandra</li>
@@ -534,7 +534,6 @@
 
     <!-- Sisipkan referensi Bootstrap JavaScript (opsional, jika Anda ingin menggunakan komponen JavaScript Bootstrap) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <!-- Sisipkan script JavaScript khusus Anda di sini -->
     <script>
         const searchInput = document.getElementById('searchInput');
         const groupList = document.getElementById('groupList').getElementsByClassName('group');
@@ -543,16 +542,29 @@
             const searchTerm = searchInput.value.toLowerCase();
             for (const group of groupList) {
                 const groupMembers = group.querySelector('ul').getElementsByTagName('li');
-                let matchFound = false;
                 for (const member of groupMembers) {
-                    if (member.textContent.toLowerCase().includes(searchTerm)) {
-                        matchFound = true;
+                    const memberText = member.textContent.toLowerCase();
+                    if (memberText.includes(searchTerm)) {
+                        // Periksa apakah nama mengandung "(capt)"
+                        const isCaptain = memberText.includes("(capt)");
+                        // Buat elemen span untuk teks tebal jika nama adalah kapten
+                        const memberElement = document.createElement("span");
+                        if (isCaptain) {
+                            memberElement.style.fontWeight = "bold";
+                        }
+                        memberElement.textContent = member.textContent;
+                        // Gantikan teks anggota dengan elemen span
+                        member.textContent = "";
+                        member.appendChild(memberElement);
+                        group.style.display = 'block';
                         break;
+                    } else {
+                        group.style.display = 'none';
                     }
                 }
-                group.style.display = matchFound ? 'block' : 'none';
             }
         });
-    </script>    
+    </script>
+    
 </body>
 </html>
